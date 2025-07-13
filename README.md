@@ -1,115 +1,141 @@
-# 🚕 Driver Churn Prediction
+# 🚗 Driver Churn Prediction – ML Project
 
-Predicting whether a driver is likely to leave (churn) based on historical performance, demographics, and behavioral patterns.
+Predicting whether a driver will **churn (leave the platform)** using advanced machine learning techniques, based on **driver demographics**, **performance**, **income**, and more.
 
-![Python](https://img.shields.io/badge/Python-3.10+-blue?logo=python)
-![Pandas](https://img.shields.io/badge/Pandas-Data%20Wrangling-green?logo=pandas)
-![Seaborn](https://img.shields.io/badge/Seaborn-Visualizations-orange?logo=seaborn)
-
----
-
-## 📌 Project Overview
-
-This project analyzes a dataset of over 19,000 records containing detailed information on drivers, including:
-- Demographics (Age, Gender, City)
-- Employment history (Joining date, Last working date, Designation)
-- Monthly performance (Income, Business value, Ratings)
-
-The objective is to:
-- Identify key factors that contribute to driver churn
-- Create meaningful features through feature engineering
-- Visualize trends and insights across various attributes
+![Driver Churn Banner](https://img.shields.io/badge/ML-Driver%20Churn%20Prediction-blue?style=for-the-badge)  
+![Python](https://img.shields.io/badge/Python-3.10+-blue.svg)  
+![ML Models](https://img.shields.io/badge/Models-XGBoost%2C%20LightGBM%2C%20RF%2C%20GB-orange.svg)
 
 ---
 
-## 📊 Dataset Description
+## 📊 Dataset Overview
 
-| Feature              | Description |
-|----------------------|-------------|
-| `Driver_ID`          | Unique driver identifier |
-| `Age`, `Gender`      | Demographic features |
-| `City`               | Location code |
-| `Education_Level`    | 10+ / 12+ / Graduate |
-| `Income`             | Monthly average income |
-| `Joining Designation`, `Grade` | Role info |
-| `Total Business Value` | Monthly performance value |
-| `Quarterly Rating`   | Driver rating from 1 to 5 |
-| `LastWorkingDate`    | Indicates if the driver churned |
-
----
-
-## 🔧 Data Cleaning & Feature Engineering
-
-- ✅ Handled missing values using **KNN Imputation**
-- 📆 Converted date columns to datetime objects
-- 🧠 Engineered new features:
-  - `Churned` (1 if LastWorkingDate exists)
-  - `Has_Income_Increased`, `Has_Rating_Increased`
-  - `Tenure` (days between joining and last working)
-  - `Is_Valuable_Driver` based on Business vs Income
-- 🧹 Removed duplicates & inconsistencies
+| Feature               | Description                                                                          |
+|-----------------------|--------------------------------------------------------------------------------------|
+| MMMM-YY               | Reporting month-year                                                                |
+| Driver_ID             | Unique identifier for each driver                                                   |
+| Age, Gender           | Demographic details (Gender: 0=Male, 1=Female)                                      |
+| City, Education_Level | Operational details (Edu: 0=10+, 1=12+, 2=Graduate)                                 |
+| Income                | Average monthly income of driver                                                    |
+| Date Of Joining       | When the driver joined                                                              |
+| LastWorkingDate       | When the driver left                                                                |
+| Grade, Designation    | Rank and level at joining/reporting time                                            |
+| Total Business Value  | Revenue contribution (negative implies cancellations/adjustments)                   |
+| Quarterly Rating      | Driver rating (1–5)                                                                 |
 
 ---
 
-## 📈 Exploratory Data Analysis (EDA)
+## 📈 Exploratory Data Insights
 
-Visual insights using **Seaborn** and **Matplotlib**:
+### 👤 Demographics
+- **Majority drivers** aged 28–38 (right-skewed).
+- Gender & education level → **minimal impact on churn**.
+- **Most churners** joined with **Designation 1**.
 
-- **Churn Distribution**: ~68% of drivers churned.
-- **Business Value vs Churn**: Retained drivers generated significantly more value.
-- **Gender Churn Split**: Both genders affected, slightly higher in males.
-- **City-wise Distribution**: City `C20` had the highest number of drivers.
-- **Joining Trends**: Most joined in 2018; churn peaked in 2019.
-- **Tenure**: Churned drivers had shorter tenures on average.
+### 💰 Income & Business Value
+- Avg income ₹40k–₹70k, skewed distribution.
+- **Income growth = retention** (Only 43 got raises!).
+- High total business value → **less likely to churn**.
 
-<div align="center">
-  <img src="https://github.com/manoj-sys-core/your-repo/assets/driver_churn_eda.png" alt="EDA Summary" width="700"/>
-</div>
+### ⏳ Tenure & Rating
+- Short-tenure drivers churn more.
+- Ratings of **1 or 2 → high churn**; **no drivers rated 5**.
+- High **grade (4,5)** → better performance & retention.
 
----
-
-## 🔍 Key Findings
-
-- 🔻 **Low tenure & low business value** strongly correlate with churn.
-- 📈 Drivers who **improved rating or income** were less likely to churn.
-- 📍 Driver retention strategies should focus on **new joiners and underperformers**.
-- ⭐ Valuable drivers (high business vs income) should be **monitored closely** for early churn signs.
+### 🏙️ City Insights
+- **C13** has highest churn rate (>80%); **C29** has lowest.
+- **C17** shows performance drop, **C29** improves steadily.
+- City-wise churn & performance help **target retention** strategies.
 
 ---
 
-## 📁 Project Structure
+## 🧠 Machine Learning Models
 
+| Model               | Accuracy | Precision | Recall | F1 Score | AUC     |
+|--------------------|----------|-----------|--------|----------|---------|
+| Gradient Boosting  | 93.71%   | 95.41%    | 95.41% | 0.9541   | 0.9762  |
+| XGBoost            | 93.29%   | 97.12%    | 92.96% | 0.9500   | 0.9787  |
+| LightGBM ⭐         | 93.29%   | 97.73%    | 92.35% | 0.9497   | **0.9789** |
+| Random Forest      | 88.89%   | 92.81%    | 90.83% | 0.9181   | 0.9508  |
+
+> ✅ **Final Model: LightGBM**  
+> 📌 Best performance across **AUC**, **AUC-PR**, and **Precision**.
+
+---
+
+## 🚀 Final Evaluation (Test Set)
+
+| Metric        | Value       |
+|---------------|-------------|
+| Precision     | 96%         |
+| Recall        | 93%         |
+| F1 Score      | **0.941**   |
+| AUC           | **0.9789**  |
+| AUC-PR        | **0.9907**  |
+| Accuracy      | 92%         |
+
+---
+
+## 🔍 Key Business Insights
+
+- **Top churn factors**: Low performance rating, no income/rating growth, short tenure.
+- **Tenure**, **total business value**, and **Quarterly Rating** are **strong negative churn indicators**.
+- **Cities C13, C17, and C2** need urgent churn-reduction strategies.
+- **High-grade, high-income drivers** must be prioritized for **retention efforts**.
+- **Income and rating improvements** → highly associated with lower churn.
+
+---
+
+## 🔧 Feature Importance (Top Drivers of Prediction)
+
+- 🏆 **Quarterly Rating**
+- 📅 **Joining Year**
+- 💸 **Total Income & Business Value**
+- 🎖️ **Grade**
+- ⏳ **Tenure**
+
+---
+
+## 📂 Project Structure
 ```
-├── Driver_Info.csv
-├── driver_churn_analysis.ipynb
-├── README.md
+Driver-Churn-Prediction/
+├── Driver_Info.csv # Raw dataset
+├── Driver_Churn_Prediction.ipynb # Full analysis notebook
+├── README.md # Project overview
 ```
 
----
+## 📦 Tools & Technologies
 
-## 🧠 Future Scope
-
-- Train ML models (Random Forest, XGBoost) for churn prediction
-- Use SHAP for explainable AI on churn drivers
-- Integrate with dashboarding tools (e.g., Streamlit)
-
----
-
-## 🛠️ Tech Stack
-
-- **Python** (Pandas, NumPy)
-- **Matplotlib / Seaborn** (EDA & Viz)
-- **Scikit-learn** (KNN Imputer, Pipeline)
-- **Jupyter Notebook**
+- **Python 3.10**
+- **Pandas, NumPy, Matplotlib, Seaborn**
+- **Scikit-learn, XGBoost, LightGBM**
+- **EDA, Feature Engineering, Model Tuning**
 
 ---
 
-## 👨‍💻 Author
+## 📚 Future Enhancements
 
-**Manoj S**  
-📧 manojcs6317@gmail.com  
-🌐 [GitHub](https://github.com/manoj-sys-core)
+- Integrate **SHAP values** for explainable AI insights.
+- Deploy via **Streamlit** or **Flask** for real-time churn prediction.
+- Retrain periodically using new data and **drift detection**.
 
 ---
 
-> ⭐ *If you liked this project, consider giving it a star on GitHub!*
+## 🙌 Conclusion
+
+This project offers a **robust, production-ready churn prediction pipeline** that empowers the business to:
+- Identify **at-risk drivers early**.
+- Take **city-wise targeted actions**.
+- Build **custom retention policies** using explainable metrics.
+
+> ⚡ Powered by LightGBM – Ready for deployment!
+
+---
+
+## 📎 Connect with Me
+
+**Manoj S** – [GitHub](https://github.com/manoj-sys-core)  
+💬 Questions? Drop me a mail at **manojcs6317@gmail.com**
+
+---
+
