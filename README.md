@@ -49,30 +49,33 @@ Predicting whether a driver will **churn (leave the platform)** using advanced m
 
 ---
 
-## 🧠 Machine Learning Models
+## **🧠 Modeling Observations**
 
-| Model               | Accuracy | Precision | Recall | F1 Score | AUC     |
-|--------------------|----------|-----------|--------|----------|---------|
-| Gradient Boosting  | 93.71%   | 95.41%    | 95.41% | 0.9541   | 0.9762  |
-| XGBoost            | 93.29%   | 97.12%    | 92.96% | 0.9500   | 0.9787  |
-| LightGBM ⭐         | 93.29%   | 97.73%    | 92.35% | 0.9497   | **0.9789** |
-| Random Forest      | 88.89%   | 92.81%    | 90.83% | 0.9181   | 0.9508  |
+### 🔍 Model Comparison:
 
-> ✅ **Final Model: LightGBM**  
-> 📌 Best performance across **AUC**, **AUC-PR**, and **Precision**.
+To address class imbalance in the churn variable, **SMOTE (Synthetic Minority Over-sampling Technique)** was applied before training the models.
+
+| Model             | F1 Score   | Accuracy   | Precision  | Recall     | **AUC**    |
+| ----------------- | ---------- | ---------- | ---------- | ---------- | ---------- |
+| **LightGBM ⭐**    | **0.9264** | **0.9284** | **0.9708** | **0.8859** | **0.9761** |
+| XGBoost           | 0.9204     | 0.9207     | 0.9405     | 0.9011     | 0.9697     |
+| Gradient Boosting | 0.9203     | 0.9226     | 0.9665     | 0.8783     | 0.9721     |
+| Random Forest     | 0.8935     | 0.8917     | 0.8935     | 0.8935     | 0.9587     |
 
 ---
 
-## 🚀 Final Evaluation (Test Set)
+### ✅ Final Model: **LightGBM**
 
-| Metric        | Value       |
-|---------------|-------------|
-| Precision     | 96%         |
-| Recall        | 93%         |
-| F1 Score      | **0.941**   |
-| AUC           | **0.9789**  |
-| AUC-PR        | **0.9907**  |
-| Accuracy      | 92%         |
+> LightGBM demonstrated the most balanced and high-performing metrics across **F1 Score**, **Precision**, and **AUC** on the test set.
+
+| Metric             | Value  |
+| ------------------ | ------ |
+| **Accuracy**       | 92.84% |
+| **F1 Score**       | 0.926  |
+| **Precision**      | 97.1%  |
+| **Recall**         | 88.6%  |
+| **AUC**            | 0.9761 |
+| **Best Threshold** | 0.86   |
 
 ---
 
@@ -106,9 +109,9 @@ Driver-Churn-Prediction/
 
 ## 📦 Tools & Technologies
 
-- **Python 3.10**
+- **Python 3.12**
 - **Pandas, NumPy, Matplotlib, Seaborn**
-- **Scikit-learn, XGBoost, LightGBM**
+- **Scikit-learn, XGBoost, LightGBM, imbalanced-learn (SMOTE)**
 - **EDA, Feature Engineering, Model Tuning**
 
 ---
