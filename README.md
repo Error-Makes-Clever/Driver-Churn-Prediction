@@ -57,25 +57,26 @@ To address class imbalance in the churn variable, **SMOTE (Synthetic Minority Ov
 
 | Model             | F1 Score   | Accuracy   | Precision  | Recall     | **AUC**    |
 | ----------------- | ---------- | ---------- | ---------- | ---------- | ---------- |
-| **LightGBM ⭐**    | **0.9264** | **0.9284** | **0.9708** | **0.8859** | **0.9761** |
-| XGBoost           | 0.9204     | 0.9207     | 0.9405     | 0.9011     | 0.9697     |
-| Gradient Boosting | 0.9203     | 0.9226     | 0.9665     | 0.8783     | 0.9721     |
-| Random Forest     | 0.8935     | 0.8917     | 0.8935     | 0.8935     | 0.9587     |
+| **LightGBM ⭐**    | **0.9612** | **0.9476** | **0.9657** | **0.9568** | **0.9764** |
+| Gradient Boosting | 0.9553     | 0.9392     | 0.9538     | 0.9568     | 0.9764     |
+| XGBoost           | 0.9502     | 0.9329     | 0.9591     | 0.9414     | 0.9749     |
+| Random Forest     | 0.9354     | 0.9120     | 0.9325     | 0.9383     | 0.9642     |
 
 ---
 
 ### ✅ Final Model: **LightGBM**
 
-> LightGBM demonstrated the most balanced and high-performing metrics across **F1 Score**, **Precision**, and **AUC** on the test set.
+> LightGBM demonstrated the most balanced and high-performing metrics across **F1 Score**, **Precision**, **Recall**, and **AUC** on the test set.
 
 | Metric             | Value  |
 | ------------------ | ------ |
-| **Accuracy**       | 92.84% |
-| **F1 Score**       | 0.926  |
-| **Precision**      | 97.1%  |
-| **Recall**         | 88.6%  |
-| **AUC**            | 0.9761 |
-| **Best Threshold** | 0.86   |
+| **Accuracy**       | 94.76% |
+| **F1 Score**       | 0.961  |
+| **Precision**      | 96.6%  |
+| **Recall**         | 95.7%  |
+| **AUC**            | 0.9764 |
+| **AUC-PR**         | 0.9895 |
+| **Best Threshold** | 0.12   |
 
 ---
 
